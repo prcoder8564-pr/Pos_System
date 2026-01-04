@@ -67,16 +67,16 @@
                         @endif
                     </form>
 
-                    <hr>
                     
-                    <div class="alert alert-info mb-0">
+                    
+                    <!-- <div class="alert alert-info mb-0">
                         <strong>Test Credentials:</strong><br>
                         <small>
                             Admin: admin@pos.com / password<br>
                             Manager: manager1@pos.com / password<br>
                             Cashier: cashier1@pos.com / password
                         </small>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

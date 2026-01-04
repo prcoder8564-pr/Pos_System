@@ -33,13 +33,33 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('admin/dashboard');
         }
 
         throw ValidationException::withMessages([
             'email' => ['The provided credentials do not match our records.'],
         ]);
     }
+
+
+// Authenticated Function
+    protected function authenticated($request, $user)
+    {
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
+        if ($user->role === 'manager') {
+            return redirect()->route('manager.dashboard');
+        }
+
+        if ($user->role === 'cashier') {
+            return redirect()->route('cashier.pos');
+        }
+
+        return redirect()->route('login');
+    }
+
 
     /**
      * Log the user out.
