@@ -33,7 +33,7 @@
 //     Route::resource('products', ProductController::class);
     
 //     // Supplier Management
-//     Route::resource('suppliers', SupplierController::class);
+    Route::resource('suppliers', SupplierController::class);
     
 //     // Customer Management
     Route::resource('customers', CustomerController::class);
