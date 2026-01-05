@@ -374,11 +374,11 @@
                 </a>
             </li>
 
-            <li>
-                <a href="{{ route('admin.products.index') }}" class="{{ request()->routeIs('admin.products.*') ? 'active' : '' }}">
-                    <i class="fas fa-box"></i>
+            <li class="nav-item {{ Request::is('admin/products*') ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ route('admin.products.index') }}">
+                     <i class="fas fa-box"></i>
                     <span>Products</span>
-                </a>
+                 </a>
             </li>
 
             <li>

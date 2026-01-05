@@ -24,13 +24,13 @@
 //     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
 //     // User Management
-//     Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class);
     
 //     // Category Management
-//     Route::resource('categories', CategoryController::class);
+    Route::resource('categories', CategoryController::class);
     
 //     // Product Management
-//     Route::resource('products', ProductController::class);
+    Route::resource('products', ProductController::class);
     
 //     // Supplier Management
     Route::resource('suppliers', SupplierController::class);
