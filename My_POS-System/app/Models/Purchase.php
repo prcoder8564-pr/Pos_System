@@ -75,4 +75,8 @@ class Purchase extends Model
     {
         return ($this->subtotal + $this->tax) - $this->discount;
     }
+    public function items()
+{
+    return $this->purchaseItems();
+}
 }

@@ -398,12 +398,13 @@
             <div class="sidebar-divider"></div>
             <div class="sidebar-heading">Transactions</div>
 
-            <li>
-                <a href="{{ route('admin.purchases.index') }}" class="{{ request()->routeIs('admin.purchases.*') ? 'active' : '' }}">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Purchases</span>
-                </a>
-            </li>
+            <!-- Add after Products menu item -->
+<li class="nav-item {{ Request::is('admin/purchases*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('admin.purchases.index') }}">
+        <i class="fas fa-shopping-cart"></i>
+        <span>Purchases</span>
+    </a>
+</li>
 
             <li>
                 <a href="{{ route('admin.sales.index') }}" class="{{ request()->routeIs('admin.sales.*') ? 'active' : '' }}">
