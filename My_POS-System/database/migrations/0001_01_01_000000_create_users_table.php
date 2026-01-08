@@ -21,6 +21,18 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::table('users', function (Blueprint $table) {
+        if (!Schema::hasColumn('users', 'phone')) {
+            $table->string('phone', 15)->nullable()->after('email');
+        }
+        if (!Schema::hasColumn('users', 'role')) {
+            $table->enum('role', ['admin', 'manager', 'cashier'])->default('cashier')->after('phone');
+        }
+        if (!Schema::hasColumn('users', 'status')) {
+            $table->enum('status', ['active', 'inactive'])->default('active')->after('role');
+        }
+    });
+
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
@@ -36,6 +48,8 @@ return new class extends Migration
             $table->integer('last_activity')->index();
         });
     }
+
+    
 
     /**
      * Reverse the migrations.

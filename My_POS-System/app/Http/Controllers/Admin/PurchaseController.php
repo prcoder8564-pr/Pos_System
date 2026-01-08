@@ -95,6 +95,7 @@ class PurchaseController extends Controller
             
             // Create purchase
             $purchase = Purchase::create([
+                
                 'supplier_id' => $validated['supplier_id'],
                 'user_id' => auth()->id(),
                 'reference_number' => $validated['reference_number'],

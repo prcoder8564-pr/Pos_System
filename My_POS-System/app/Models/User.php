@@ -35,12 +35,12 @@ class User extends Authenticatable
     // Relationships
     public function sales()
     {
-        return $this->hasMany(Sale::class);
+        return $this->hasMany(Sale::class, 'user_id');
     }
 
     public function purchases()
     {
-        return $this->hasMany(Purchase::class);
+        return $this->hasMany(Purchase::class, 'user_id');
     }
 
     public function inventoryLogs()
@@ -62,5 +62,24 @@ class User extends Authenticatable
     public function isCashier()
     {
         return $this->role === 'cashier';
+    }
+
+    //     * Get role badge color
+//  */
+    public function getRoleBadgeAttribute()
+    {
+        return [
+            'admin' => 'danger',
+            'manager' => 'warning',
+            'cashier' => 'info',
+        ][$this->role] ?? 'secondary';
+    }
+
+    /**
+     * Get status badge color
+     */
+    public function getStatusBadgeAttribute()
+    {
+        return $this->status == 'active' ? 'success' : 'secondary';
     }
 }

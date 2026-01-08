@@ -360,12 +360,13 @@
             <div class="sidebar-divider"></div>
             <div class="sidebar-heading">Management</div>
 
-            <li>
-                <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-                    <i class="fas fa-users"></i>
-                    <span>Users</span>
-                </a>
-            </li>
+           <!-- Add after Purchases menu item -->
+<li class="nav-item {{ Request::is('admin/users*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('admin.users.index') }}">
+        <i class="fas fa-users"></i>
+        <span>Users</span>
+    </a>
+</li>
 
             <li>
                 <a href="{{ route('admin.categories.index') }}" class="{{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
