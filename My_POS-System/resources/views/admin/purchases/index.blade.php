@@ -144,14 +144,14 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if($purchase->payment_status == 'paid')
-                                        <span class="badge bg-success">Paid</span>
-                                    @elseif($purchase->payment_status == 'partial')
-                                        <span class="badge bg-warning text-dark">Partial</span>
-                                    @else
-                                        <span class="badge bg-danger">Unpaid</span>
-                                    @endif
-                                </td>
+    @if ($purchase->due_amount == 0)
+        <span class="badge bg-success">Paid</span>
+    @elseif ($purchase->paid_amount == 0)
+        <span class="badge bg-danger">Unpaid</span>
+    @else
+        <span class="badge bg-warning">Partial</span>
+    @endif
+</td>
                                 <td>
                                     <span class="badge bg-info">{{ $purchase->items->count() }} items</span>
                                 </td>

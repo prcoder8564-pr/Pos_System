@@ -243,52 +243,98 @@ class PurchaseController extends Controller
         }
     }
     
+    // Old Code 
+
     /**
      * Add payment to existing purchase
      */
+
+
+    // public function addPayment(Request $request, Purchase $purchase)
+    // {
+    //     $validated = $request->validate([
+    //         'amount' => 'required|numeric|min:0.01|max:' . $purchase->due_amount,
+    //         'payment_method' => 'required|in:cash,card,bank_transfer,upi,cheque',
+    //         'payment_date' => 'required|date',
+    //         'note' => 'nullable|string',
+    //     ]);
+        
+    //     DB::beginTransaction();
+        
+    //     try {
+    //         // Create payment
+    //         Payment::create([
+    //             'purchase_id' => $purchase->id,
+    //             'amount' => $validated['amount'],
+    //             'payment_method' => $validated['payment_method'],
+    //             'payment_date' => $validated['payment_date'],
+    //             'note' => $validated['note'],
+    //         ]);
+            
+    //         // Update purchase amounts
+    //         $purchase->paid_amount += $validated['amount'];
+    //         $purchase->due_amount -= $validated['amount'];
+            
+    //         // Update payment status
+    //         if ($purchase->due_amount <= 0) {
+    //             $purchase->payment_status = 'paid';
+    //         } else {
+    //             $purchase->payment_status = 'partial';
+    //         }
+            
+    //         $purchase->save();
+            
+    //         DB::commit();
+            
+    //         return back()->with('success', 'Payment added successfully!');
+            
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+    //         return back()->with('error', 'Failed to add payment: ' . $e->getMessage());
+    //     }
+    // }
+
+
+    // Updated Code
+
     public function addPayment(Request $request, Purchase $purchase)
-    {
-        $validated = $request->validate([
-            'amount' => 'required|numeric|min:0.01|max:' . $purchase->due_amount,
-            'payment_method' => 'required|in:cash,card,bank_transfer,upi,cheque',
-            'payment_date' => 'required|date',
-            'note' => 'nullable|string',
+{
+    $validated = $request->validate([
+        'amount' => 'required|numeric|min:0.01|max:' . $purchase->due_amount,
+        'payment_method' => 'required|in:cash,card,bank_transfer,upi,cheque',
+        'payment_date' => 'required|date',
+        'note' => 'nullable|string',
+    ]);
+    
+    DB::beginTransaction();
+    
+    try {
+        // Create payment
+        Payment::create([
+            'purchase_id' => $purchase->id,
+            'amount' => $validated['amount'],
+            'payment_method' => $validated['payment_method'],
+            'payment_date' => $validated['payment_date'],
+            'note' => $validated['note'],
         ]);
         
-        DB::beginTransaction();
+        // Update purchase amounts
+        $purchase->paid_amount += $validated['amount'];
+        $purchase->due_amount -= $validated['amount'];
         
-        try {
-            // Create payment
-            Payment::create([
-                'purchase_id' => $purchase->id,
-                'amount' => $validated['amount'],
-                'payment_method' => $validated['payment_method'],
-                'payment_date' => $validated['payment_date'],
-                'note' => $validated['note'],
-            ]);
-            
-            // Update purchase amounts
-            $purchase->paid_amount += $validated['amount'];
-            $purchase->due_amount -= $validated['amount'];
-            
-            // Update payment status
-            if ($purchase->due_amount <= 0) {
-                $purchase->payment_status = 'paid';
-            } else {
-                $purchase->payment_status = 'partial';
-            }
-            
-            $purchase->save();
-            
-            DB::commit();
-            
-            return back()->with('success', 'Payment added successfully!');
-            
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('error', 'Failed to add payment: ' . $e->getMessage());
-        }
+        // REMOVE the payment_status lines - table doesn't have this column
+        
+        $purchase->save();
+        
+        DB::commit();
+        
+        return back()->with('success', 'Payment added successfully!');
+        
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return back()->with('error', 'Failed to add payment: ' . $e->getMessage());
     }
+}
     
     /**
      * Generate unique reference number

@@ -79,4 +79,17 @@ class Purchase extends Model
 {
     return $this->purchaseItems();
 }
+public function getPaymentStatusAttribute()
+{
+    if ($this->due_amount == 0) {
+        return 'paid';
+    }
+
+    if ($this->paid_amount == 0) {
+        return 'unpaid';
+    }
+
+    return 'partial';
+}
+
 }
